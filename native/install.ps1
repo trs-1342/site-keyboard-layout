@@ -5,15 +5,15 @@
 #   powershell -ExecutionPolicy Bypass -File .\native\install.ps1
 #
 # It can also be run without downloading the project first:
-#   irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.2/native/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.3/native/install.ps1 | iex
 # In that case the helper program is fetched from the same release and its
 # checksum is verified before anything is installed.
 $ErrorActionPreference = "Stop"
 
 $name = "site_keyboard_layout"
 $extensionId = "site-keyboard-layout@trs-1342"
-$version = "2.0.2"
-$helperSha256 = "c322c1853945f3a5d05dc03e0806473fd954fd7fb195557182c4abb4afab277c"
+$version = "2.0.3"
+$helperSha256 = "1010564120130bdd65bdfc20c8578ee2856ad76c88f07f62dfc394ecf8235a33"
 $baseUrl = "https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v$version/native"
 $target = Join-Path $env:LOCALAPPDATA "site-keyboard-layout"
 

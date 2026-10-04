@@ -21,7 +21,7 @@ import subprocess
 import sys
 import time
 
-VERSION = "2.0.2"
+VERSION = "2.0.3"
 ALLOWED_EXTENSION = "site-keyboard-layout@trs-1342"
 MAX_MESSAGE_BYTES = 4096
 LAYOUT_RE = re.compile(r"^[A-Za-z0-9_-]{1,32}(\([A-Za-z0-9_-]{1,32}\))?$")

@@ -7,7 +7,7 @@
 #   sudo ./native/install.sh --system   all users
 #
 # It can also be run without downloading the project first:
-#   curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.2/native/install.sh | sudo bash
+#   curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.3/native/install.sh | sudo bash
 # In that case the helper program is fetched from the same release and its
 # checksum is verified before anything is installed.
 #
@@ -20,8 +20,8 @@ set -euo pipefail
 
 name="site_keyboard_layout"
 extension_id="site-keyboard-layout@trs-1342"
-version="2.0.2"
-helper_sha256="c322c1853945f3a5d05dc03e0806473fd954fd7fb195557182c4abb4afab277c"
+version="2.0.3"
+helper_sha256="1010564120130bdd65bdfc20c8578ee2856ad76c88f07f62dfc394ecf8235a33"
 base_url="https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v$version/native"
 mode="${1:-auto}"
 

@@ -27,9 +27,9 @@ project therefore has two parts:
    [native messaging](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Native_messaging).
    It performs the actual switch and exits.
 
-The layout is applied when you change tab, navigate, or come back to Firefox.
-While you stay on the same tab the extension leaves the layout alone, so you can
-still switch manually when you need to.
+The layout is applied every time you change tab or come back to the Firefox
+window, and whenever a tab navigates to a site with a different layout. If you
+switch the layout by hand, your choice holds while you stay on that tab.
 
 ## Supported systems
 
@@ -76,13 +76,13 @@ Or use one command in a terminal:
 **Linux (KDE Plasma)**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.2/native/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.3/native/install.sh | sudo bash
 ```
 
 **Windows** (PowerShell, no administrator rights needed; Python 3 must be installed)
 
 ```powershell
-irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.2/native/install.ps1 | iex
+irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.3/native/install.ps1 | iex
 ```
 
 The installer downloads a single Python file from the same release, verifies

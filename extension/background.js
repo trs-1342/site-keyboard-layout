@@ -6,15 +6,17 @@
 // sent while Firefox is in the background; otherwise another application's
 // layout would change.
 //
-// Switching tabs always applies the tab's layout. Events that keep the context
-// (navigating within a tab without changing the target layout, or coming back
-// to the window) do not, so a manual change survives while you stay on a tab.
+// Switching tabs or coming back to the Firefox window always applies the tab's
+// layout, so the system can never stay out of step with the badge for long.
+// Only navigating within one tab, with the same target layout, leaves the
+// layout alone; that is how a manual change survives while you stay on a tab.
 "use strict";
 
 const COLOR_ACTIVE = "#b3202a";
 const COLOR_IDLE = "#666666";
 const COLOR_PAUSED = "#aa6600";
 const COLOR_ERROR = "#000000";
+const FOCUS_RECHECK_MS = 400;
 
 let queue = Promise.resolve();
 
@@ -76,7 +78,11 @@ async function evaluate(force) {
 browser.tabs.onActivated.addListener(() => schedule(true));
 browser.tabs.onUpdated.addListener(() => schedule(false), { properties: ["url"] });
 browser.windows.onFocusChanged.addListener((id) => {
-  if (id !== browser.windows.WINDOW_ID_NONE) schedule(false);
+  if (id === browser.windows.WINDOW_ID_NONE) return;
+  schedule(true);
+  // Desktops that remember a layout per window restore it when the window is
+  // activated, sometimes just after this event; apply once more to win that race.
+  setTimeout(() => schedule(true), FOCUS_RECHECK_MS);
 });
 browser.windows.onRemoved.addListener(async (id) => {
   const state = await getSession();
