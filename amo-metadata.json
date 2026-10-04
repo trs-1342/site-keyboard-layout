@@ -1,0 +1,11 @@
+{
+  "categories": { "firefox": ["language-support", "tabs"] },
+  "summary": {
+    "en-US": "Switches your system keyboard layout to match the site in the active tab. Needs a small helper program (KDE Plasma on Linux, or Windows)."
+  },
+  "homepage": { "en-US": "https://github.com/trs-1342/site-keyboard-layout" },
+  "support_url": { "en-US": "https://github.com/trs-1342/site-keyboard-layout/issues" },
+  "version": {
+    "license": "GPL-3.0-only"
+  }
+}

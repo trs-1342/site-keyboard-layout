@@ -6,6 +6,11 @@
 #   ./native/install.sh --user     current user only (~/.mozilla)
 #   sudo ./native/install.sh --system   all users
 #
+# It can also be run without downloading the project first:
+#   curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.0/native/install.sh | sudo bash
+# In that case the helper program is fetched from the same release and its
+# checksum is verified before anything is installed.
+#
 # Firefox looks for the host manifest in ~/.mozilla/native-messaging-hosts and
 # in /usr/lib{,64}/mozilla/native-messaging-hosts. Newer Firefox profiles live
 # in ~/.config/mozilla and have no ~/.mozilla at all; this script never creates
@@ -15,8 +20,16 @@ set -euo pipefail
 
 name="site_keyboard_layout"
 extension_id="site-keyboard-layout@trs-1342"
-here="$(cd "$(dirname "$0")" && pwd)"
+version="2.0.0"
+helper_sha256="569c5675e25666c6e69c2d451a81b1db4488238b14b3400c82df3161814effbb"
+base_url="https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v$version/native"
 mode="${1:-auto}"
+
+# Empty when the script is piped into bash instead of run from a checkout.
+here=""
+if [ -n "${BASH_SOURCE[0]:-}" ] && [ -f "$(dirname "${BASH_SOURCE[0]}")/$name.py" ]; then
+  here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+fi
 
 if [ "$mode" = "auto" ]; then
   if [ "$(id -u)" -eq 0 ]; then
@@ -25,7 +38,7 @@ if [ "$mode" = "auto" ]; then
     mode="--user"
   else
     echo "No ~/.mozilla directory found, so a system-wide install is needed:" >&2
-    echo "  sudo $0 --system" >&2
+    echo "  sudo bash install.sh --system" >&2
     exit 1
   fi
 fi
@@ -39,7 +52,7 @@ case "$mode" in
     manifest_dirs=("$HOME/.mozilla/native-messaging-hosts")
     ;;
   --system)
-    [ "$(id -u)" -eq 0 ] || { echo "--system needs root: sudo $0 --system" >&2; exit 1; }
+    [ "$(id -u)" -eq 0 ] || { echo "--system needs root: sudo bash install.sh --system" >&2; exit 1; }
     lib_dir="/usr/local/lib/site-keyboard-layout"
     manifest_dirs=("/usr/lib/mozilla/native-messaging-hosts")
     # Fedora and friends use a separate lib64 tree.
@@ -48,13 +61,24 @@ case "$mode" in
     fi
     ;;
   *)
-    echo "Usage: $0 [--user|--system]" >&2
+    echo "Usage: install.sh [--user|--system]" >&2
     exit 1
     ;;
 esac
 
+if [ -n "$here" ]; then
+  source_file="$here/$name.py"
+else
+  command -v curl >/dev/null || { echo "curl is required." >&2; exit 1; }
+  tmp="$(mktemp)"
+  trap 'rm -f "$tmp"' EXIT
+  curl -fsSL "$base_url/$name.py" -o "$tmp"
+  echo "$helper_sha256  $tmp" | sha256sum -c --quiet - || { echo "Checksum mismatch, nothing installed." >&2; exit 1; }
+  source_file="$tmp"
+fi
+
 install -d -m 755 "$lib_dir"
-install -m 755 "$here/$name.py" "$lib_dir/$name.py"
+install -m 755 "$source_file" "$lib_dir/$name.py"
 
 for dir in "${manifest_dirs[@]}"; do
   install -d -m 755 "$dir"

@@ -206,10 +206,21 @@ browser.storage.onChanged.addListener((_, area) => {
   if (area === "local") render();
 });
 
-$("guide").href = browser.runtime.getManifest().homepage_url + "#installation";
+const manifest = browser.runtime.getManifest();
+const RAW = `https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v${manifest.version}/native`;
+$("guide").href = manifest.homepage_url + "#installation";
+$("cmdLinux").textContent = `curl -fsSL ${RAW}/install.sh | sudo bash`;
+$("cmdWindows").textContent = `irm ${RAW}/install.ps1 | iex`;
+for (const button of document.querySelectorAll("button.copy")) {
+  button.onclick = async () => {
+    await navigator.clipboard.writeText($(button.dataset.copy).textContent);
+    button.textContent = t("copied");
+    setTimeout(() => (button.textContent = t("copy")), 1500);
+  };
+}
 browser.runtime.getPlatformInfo().then(({ os }) => {
-  for (const id of ["howLinux", "cmdLinux"]) $(id).hidden = os === "win";
-  for (const id of ["howWindows", "cmdWindows"]) $(id).hidden = os !== "win";
+  for (const id of ["howLinux", "rowLinux"]) $(id).hidden = os === "win";
+  for (const id of ["howWindows", "rowWindows"]) $(id).hidden = os !== "win";
 });
 render();
 renderShortcut();

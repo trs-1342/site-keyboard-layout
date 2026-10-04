@@ -1,5 +1,7 @@
 # Site Keyboard Layout
 
+[![tests](https://github.com/trs-1342/site-keyboard-layout/actions/workflows/test.yml/badge.svg)](https://github.com/trs-1342/site-keyboard-layout/actions/workflows/test.yml)
+
 A Firefox extension that switches your **system keyboard layout** to match the
 site in the active tab. Write Turkish on WhatsApp Web and English everywhere
 else, German on one site and Russian on another, and never reach for the layout
@@ -10,6 +12,8 @@ switcher again.
 - On/off button, configurable keyboard shortcut, per-site pause
 - Setup screen on first run; interface in English, Türkçe, Deutsch, Español, Français
 - Stores nothing but its own settings, and never talks to the network
+
+![Settings page](docs/settings.png)
 
 ## How it works
 
@@ -47,33 +51,50 @@ site would follow you into other applications.
 
 ## Installation
 
-### 1. The helper program
+### 1. The extension
 
-Download or clone this repository, then:
+Install **Site Keyboard Layout** from
+[addons.mozilla.org](https://addons.mozilla.org/firefox/search/?q=Site%20Keyboard%20Layout).
+A setup screen opens and shows the one command you need for step 2.
 
-**Linux**
+### 2. The helper program
+
+One command, once. The setup screen shows it with a copy button.
+
+**Linux (KDE Plasma)**
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.0/native/install.sh | sudo bash
+```
+
+**Windows** (PowerShell, no administrator rights needed; Python 3 must be installed)
+
+```powershell
+irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.0/native/install.ps1 | iex
+```
+
+The installer downloads a single Python file from the same release, verifies
+its SHA-256 checksum and registers it with Firefox. Then press *Check again*
+on the setup screen.
+
+Prefer to read before you run? Clone the repository and run the same script
+from the checkout:
 
 ```sh
 sudo ./native/install.sh --system     # all users
-# or, if you have a ~/.mozilla directory:
-./native/install.sh --user            # current user only
+./native/install.sh --user            # current user only, needs ~/.mozilla
 ```
-
-Running `./native/install.sh` without arguments picks the right mode or tells
-you which one you need. Recent Firefox versions keep their profile in
-`~/.config/mozilla` and have no `~/.mozilla`; those systems need `--system`.
-
-**Windows** (PowerShell, no administrator rights needed)
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\native\install.ps1
 ```
 
-### 2. The extension
+Recent Firefox versions keep their profile in `~/.config/mozilla` and have no
+`~/.mozilla`; those systems need the system-wide install, which is why the
+one-line command uses `sudo`.
 
-Install the signed `.xpi` from the releases page: open it in Firefox or drag it
-into a Firefox window. The setup screen opens automatically and tells you
-whether the helper program was found.
+To let the extension work in private windows too, enable *Run in Private
+Windows* for it in `about:addons`.
 
 ### Uninstalling
 
@@ -130,6 +151,11 @@ npx web-ext sign -s extension --channel=unlisted \
 
 If you fork the project, change the extension ID in `extension/manifest.json`,
 `native/site_keyboard_layout.py` and the install scripts.
+
+A release is: bump the version in `extension/manifest.json`, the helper and
+both install scripts, update the checksum in the install scripts
+(`sha256sum native/site_keyboard_layout.py`; the tests check all of this), and
+tag the commit `vX.Y.Z` so the one-line installers resolve.
 
 ### Adding a desktop
 

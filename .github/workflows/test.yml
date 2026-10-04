@@ -1,0 +1,20 @@
+name: tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Helper program tests
+        run: python3 -m unittest discover tests
+      - name: Extension tests
+        run: node --test tests/common.test.js
+      - name: Lint extension
+        run: npx --yes web-ext lint -s extension
