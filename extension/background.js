@@ -6,8 +6,9 @@
 // sent while Firefox is in the background; otherwise another application's
 // layout would change.
 //
-// A layout is applied only when the context (tab + target layout) changes, so
-// a manual layout change is not overwritten while you stay on the same tab.
+// Switching tabs always applies the tab's layout. Events that keep the context
+// (navigating within a tab without changing the target layout, or coming back
+// to the window) do not, so a manual change survives while you stay on a tab.
 "use strict";
 
 const COLOR_ACTIVE = "#b3202a";
@@ -72,7 +73,7 @@ async function evaluate(force) {
   await browser.storage.session.set({ applied: state.applied });
 }
 
-browser.tabs.onActivated.addListener(() => schedule(false));
+browser.tabs.onActivated.addListener(() => schedule(true));
 browser.tabs.onUpdated.addListener(() => schedule(false), { properties: ["url"] });
 browser.windows.onFocusChanged.addListener((id) => {
   if (id !== browser.windows.WINDOW_ID_NONE) schedule(false);

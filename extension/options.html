@@ -22,10 +22,21 @@
   <div class="card">
     <p class="status" id="helperStatus"></p>
     <div id="helperHelp" hidden>
-      <p data-i18n="helperHowLinux" id="howLinux"></p>
-      <div class="row" id="rowLinux"><code id="cmdLinux" class="grow"></code><button class="copy" data-copy="cmdLinux" data-i18n="copy"></button></div>
-      <p data-i18n="helperHowWindows" id="howWindows"></p>
-      <div class="row" id="rowWindows"><code id="cmdWindows" class="grow"></code><button class="copy" data-copy="cmdWindows" data-i18n="copy"></button></div>
+      <p data-i18n="helperDownloadIntro"></p>
+      <div class="row" id="rowDownloadLinux">
+        <a class="button primary" id="dlRpm" data-i18n="downloadRpm"></a>
+        <a class="button primary" id="dlDeb" data-i18n="downloadDeb"></a>
+      </div>
+      <div class="row" id="rowDownloadWindows">
+        <a class="button primary" id="dlWin" data-i18n="downloadWin"></a>
+      </div>
+      <details>
+        <summary data-i18n="helperTerminal"></summary>
+        <p data-i18n="helperHowLinux" id="howLinux"></p>
+        <div class="row" id="rowLinux"><code id="cmdLinux" class="grow"></code><button class="copy" data-copy="cmdLinux" data-i18n="copy"></button></div>
+        <p data-i18n="helperHowWindows" id="howWindows"></p>
+        <div class="row" id="rowWindows"><code id="cmdWindows" class="grow"></code><button class="copy" data-copy="cmdWindows" data-i18n="copy"></button></div>
+      </details>
       <p class="hint" id="helperDetails"></p>
       <p><a id="guide" target="_blank" rel="noopener noreferrer" data-i18n="helperGuide"></a></p>
     </div>

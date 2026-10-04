@@ -59,18 +59,30 @@ A setup screen opens and shows the one command you need for step 2.
 
 ### 2. The helper program
 
-One command, once. The setup screen shows it with a copy button.
+Installed once. The setup screen offers the right download for your system:
+open the downloaded file and your system asks for permission and installs it.
+
+| System | Installer |
+| --- | --- |
+| Fedora, openSUSE | [site-keyboard-layout-helper.rpm](https://github.com/trs-1342/site-keyboard-layout/releases/latest/download/site-keyboard-layout-helper.rpm) |
+| Debian, Ubuntu | [site-keyboard-layout-helper.deb](https://github.com/trs-1342/site-keyboard-layout/releases/latest/download/site-keyboard-layout-helper.deb) |
+| Windows | [site-keyboard-layout-setup.cmd](https://github.com/trs-1342/site-keyboard-layout/releases/latest/download/site-keyboard-layout-setup.cmd) (Python 3 must be installed) |
+
+A browser extension cannot install software or ask for administrator rights
+itself, which is why this step happens outside Firefox.
+
+Or use one command in a terminal:
 
 **Linux (KDE Plasma)**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.1/native/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.2/native/install.sh | sudo bash
 ```
 
 **Windows** (PowerShell, no administrator rights needed; Python 3 must be installed)
 
 ```powershell
-irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.1/native/install.ps1 | iex
+irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.2/native/install.ps1 | iex
 ```
 
 The installer downloads a single Python file from the same release, verifies
@@ -98,8 +110,10 @@ Windows* for it in `about:addons`.
 
 ### Uninstalling
 
-Remove the extension in `about:addons`, then run `native/uninstall.sh` (with
-`sudo` for a system install) or `native\uninstall.ps1`.
+Remove the extension in `about:addons`. Then remove the helper the way you
+installed it: uninstall the `site-keyboard-layout-helper` package, or run
+`native/uninstall.sh` (with `sudo` for a system install) or
+`native\uninstall.ps1`.
 
 ## Privacy
 
@@ -152,10 +166,13 @@ npx web-ext sign -s extension --channel=unlisted \
 If you fork the project, change the extension ID in `extension/manifest.json`,
 `native/site_keyboard_layout.py` and the install scripts.
 
+`packaging/build.sh` builds the installers into `dist/`.
+
 A release is: bump the version in `extension/manifest.json`, the helper and
 both install scripts, update the checksum in the install scripts
 (`sha256sum native/site_keyboard_layout.py`; the tests check all of this), and
-tag the commit `vX.Y.Z` so the one-line installers resolve.
+tag the commit `vX.Y.Z` and attach the files from `dist/` to the release, so
+the download buttons and one-line installers resolve.
 
 ### Adding a desktop
 

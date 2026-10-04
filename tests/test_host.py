@@ -15,6 +15,8 @@ spec.loader.exec_module(host)
 
 class FakeBackend:
     name = "fake"
+    verify = True
+    stuck = False  # simulate a desktop that ignores the request
 
     def __init__(self):
         self.index = 0
@@ -28,7 +30,8 @@ class FakeBackend:
 
     def set_index(self, index):
         self.calls.append(index)
-        self.index = index
+        if not self.stuck:
+            self.index = index
 
 
 def frame(obj):
@@ -51,10 +54,16 @@ class HandleTests(unittest.TestCase):
         self.assertEqual(res, {"ok": True, "changed": True})
         self.assertEqual(self.backend.calls, [1])
 
-    def test_set_same_layout_is_noop(self):
+    def test_set_same_layout_is_still_applied(self):
         res = host.handle({"cmd": "set", "layout": "us"}, self.backend)
         self.assertEqual(res, {"ok": True, "changed": False})
-        self.assertEqual(self.backend.calls, [])
+        self.assertEqual(self.backend.calls, [0])
+
+    def test_ignored_request_is_reported(self):
+        self.backend.stuck = True
+        res = host.handle({"cmd": "set", "layout": "tr(f)"}, self.backend)
+        self.assertEqual(res, {"ok": False, "error": "layout did not change"})
+        self.assertEqual(self.backend.calls, [1, 1])
 
     def test_unknown_layout_rejected(self):
         res = host.handle({"cmd": "set", "layout": "de"}, self.backend)

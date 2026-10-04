@@ -19,8 +19,9 @@ import re
 import struct
 import subprocess
 import sys
+import time
 
-VERSION = "2.0.1"
+VERSION = "2.0.2"
 ALLOWED_EXTENSION = "site-keyboard-layout@trs-1342"
 MAX_MESSAGE_BYTES = 4096
 LAYOUT_RE = re.compile(r"^[A-Za-z0-9_-]{1,32}(\([A-Za-z0-9_-]{1,32}\))?$")
@@ -34,6 +35,7 @@ class KdeBackend:
     """KDE Plasma, through the org.kde.keyboard D-Bus service."""
 
     name = "kde"
+    verify = True  # setLayout is synchronous, so the result can be checked
     BUSCTL_CANDIDATES = ("/usr/bin/busctl", "/bin/busctl")
 
     def __init__(self):
@@ -74,6 +76,7 @@ class WindowsBackend:
     """Windows, by asking the foreground window to change its input language."""
 
     name = "windows"
+    verify = False  # the request is posted to the window and handled later
     WM_INPUTLANGCHANGEREQUEST = 0x0050
     LOCALE_SLOCALIZEDDISPLAYNAME = 0x00000002
 
@@ -172,10 +175,16 @@ def handle(msg, backend):
         if wanted not in ids:
             return {"ok": False, "error": "layout not configured on this system"}
         index = ids.index(wanted)
-        if index == backend.current_index():
-            return {"ok": True, "changed": False}
+        changed = backend.current_index() != index
+        # Applied even when it already looks right: the reported state can lag
+        # behind the focused window, and setting a layout twice is harmless.
         backend.set_index(index)
-        return {"ok": True, "changed": True}
+        if backend.verify and backend.current_index() != index:
+            time.sleep(0.05)
+            backend.set_index(index)
+            if backend.current_index() != index:
+                return {"ok": False, "error": "layout did not change"}
+        return {"ok": True, "changed": changed}
 
     return {"ok": False, "error": "unknown command"}
 

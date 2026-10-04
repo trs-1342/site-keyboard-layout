@@ -48,3 +48,13 @@ code {
 .status.bad { color: var(--bad); }
 .error { color: var(--bad); font-size: 12px; overflow-wrap: anywhere; }
 [hidden] { display: none !important; }
+a.button {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+}
+details { margin: 12px 0 4px; }
+summary { cursor: pointer; opacity: 0.8; font-size: 12px; }

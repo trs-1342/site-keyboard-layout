@@ -209,6 +209,10 @@ browser.storage.onChanged.addListener((_, area) => {
 const manifest = browser.runtime.getManifest();
 const RAW = `https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v${manifest.version}/native`;
 $("guide").href = manifest.homepage_url + "#installation";
+const RELEASE = `${manifest.homepage_url}/releases/download/v${manifest.version}`;
+$("dlRpm").href = `${RELEASE}/site-keyboard-layout-helper.rpm`;
+$("dlDeb").href = `${RELEASE}/site-keyboard-layout-helper.deb`;
+$("dlWin").href = `${RELEASE}/site-keyboard-layout-setup.cmd`;
 $("cmdLinux").textContent = `curl -fsSL ${RAW}/install.sh | sudo bash`;
 $("cmdWindows").textContent = `irm ${RAW}/install.ps1 | iex`;
 for (const button of document.querySelectorAll("button.copy")) {
@@ -219,8 +223,8 @@ for (const button of document.querySelectorAll("button.copy")) {
   };
 }
 browser.runtime.getPlatformInfo().then(({ os }) => {
-  for (const id of ["howLinux", "rowLinux"]) $(id).hidden = os === "win";
-  for (const id of ["howWindows", "rowWindows"]) $(id).hidden = os !== "win";
+  for (const id of ["howLinux", "rowLinux", "rowDownloadLinux"]) $(id).hidden = os === "win";
+  for (const id of ["howWindows", "rowWindows", "rowDownloadWindows"]) $(id).hidden = os !== "win";
 });
 render();
 renderShortcut();
