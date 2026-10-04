@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Site Keyboard Layout"
+  },
+  "extDescription": {
+    "message": "Stellt die Tastaturbelegung des Systems passend zur Website im aktiven Tab um (z. B. eine Website auf Türkisch, alles andere auf Englisch)."
+  },
+  "commandToggle": {
+    "message": "Site Keyboard Layout: ein / aus"
+  }
+}

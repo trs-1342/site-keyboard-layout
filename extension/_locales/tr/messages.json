@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Site Keyboard Layout"
+  },
+  "extDescription": {
+    "message": "Sistem klavye düzenini etkin sekmedeki siteye göre değiştirir (örneğin bir site Türkçe, geri kalan her şey İngilizce)."
+  },
+  "commandToggle": {
+    "message": "Site Keyboard Layout: aç / kapat"
+  }
+}

@@ -1,0 +1,7 @@
+web-ext-artifacts/
+node_modules/
+__pycache__/
+*.pyc
+# AMO signing credentials must never be committed
+.env
+.amo*

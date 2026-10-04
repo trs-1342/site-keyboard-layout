@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "2.0.0",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "homepage_url": "https://github.com/trs-1342/site-keyboard-layout",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "site-keyboard-layout@trs-1342",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": { "required": ["none"] }
+    }
+  },
+  "icons": { "48": "icon.svg", "96": "icon.svg" },
+  "permissions": ["tabs", "storage", "nativeMessaging"],
+  "content_security_policy": {
+    "extension_pages": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'"
+  },
+  "background": { "scripts": ["common.js", "background.js"] },
+  "action": {
+    "default_icon": "icon.svg",
+    "default_title": "__MSG_extName__",
+    "default_popup": "popup.html"
+  },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "commands": {
+    "toggle-enabled": {
+      "suggested_key": { "default": "Alt+Shift+K" },
+      "description": "__MSG_commandToggle__"
+    }
+  }
+}

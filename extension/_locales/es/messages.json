@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Site Keyboard Layout"
+  },
+  "extDescription": {
+    "message": "Cambia la distribución de teclado del sistema según el sitio de la pestaña activa (por ejemplo, un sitio en turco y el resto en inglés)."
+  },
+  "commandToggle": {
+    "message": "Site Keyboard Layout: activar / desactivar"
+  }
+}

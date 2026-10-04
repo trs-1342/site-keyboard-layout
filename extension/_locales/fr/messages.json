@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Site Keyboard Layout"
+  },
+  "extDescription": {
+    "message": "Change la disposition du clavier du système selon le site de l’onglet actif (par exemple un site en turc, tout le reste en anglais)."
+  },
+  "commandToggle": {
+    "message": "Site Keyboard Layout : activer / désactiver"
+  }
+}

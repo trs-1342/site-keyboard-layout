@@ -1,0 +1,74 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Site Keyboard Layout</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="options">
+  <h1 id="title"></h1>
+
+  <div class="card welcome" id="welcome" hidden>
+    <p data-i18n="welcomeIntro"></p>
+  </div>
+
+  <div class="row">
+    <label for="language" data-i18n="language"></label>
+    <select id="language"></select>
+  </div>
+
+  <h2 data-i18n="helperTitle"></h2>
+  <div class="card">
+    <p class="status" id="helperStatus"></p>
+    <div id="helperHelp" hidden>
+      <p data-i18n="helperHowLinux" id="howLinux"></p>
+      <code id="cmdLinux">sudo ./native/install.sh</code>
+      <p data-i18n="helperHowWindows" id="howWindows"></p>
+      <code id="cmdWindows">powershell -ExecutionPolicy Bypass -File .\native\install.ps1</code>
+      <p class="hint" id="helperDetails"></p>
+      <p><a id="guide" target="_blank" rel="noopener noreferrer" data-i18n="helperGuide"></a></p>
+    </div>
+    <div class="row"><button id="retry" data-i18n="retry"></button></div>
+  </div>
+
+  <label class="row">
+    <input type="checkbox" id="enabled">
+    <span data-i18n="enabled"></span>
+  </label>
+
+  <h2 data-i18n="defaultTitle"></h2>
+  <p class="hint" data-i18n="defaultHint"></p>
+  <select id="defaultLayout"></select>
+
+  <h2 data-i18n="rulesTitle"></h2>
+  <p class="hint" data-i18n="rulesHint"></p>
+  <div id="rules"></div>
+  <div class="row">
+    <input type="text" id="newHost" class="grow" maxlength="253" spellcheck="false" data-i18n-placeholder="hostPlaceholder">
+    <select id="newLayout"></select>
+    <button id="add" class="primary" data-i18n="add"></button>
+  </div>
+  <p class="error" id="ruleError" hidden></p>
+
+  <h2 data-i18n="shortcutTitle"></h2>
+  <p class="hint" data-i18n="shortcutHint"></p>
+  <div class="row">
+    <input type="text" id="shortcut" readonly data-i18n-placeholder="shortcutNone">
+    <button id="shortcutReset" data-i18n="shortcutReset"></button>
+    <button id="shortcutClear" data-i18n="shortcutClear"></button>
+  </div>
+  <p class="error" id="shortcutError" hidden></p>
+
+  <h2 data-i18n="privacyTitle"></h2>
+  <p class="hint" data-i18n="privacyText"></p>
+
+  <div class="row" id="doneRow" hidden>
+    <button id="done" class="primary" data-i18n="welcomeDone"></button>
+  </div>
+
+  <script src="locales.js"></script>
+  <script src="common.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

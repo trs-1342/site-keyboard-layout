@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Site Keyboard Layout"
+  },
+  "extDescription": {
+    "message": "Switches the system keyboard layout to match the site in the active tab (for example one site in Turkish, everything else in English)."
+  },
+  "commandToggle": {
+    "message": "Site Keyboard Layout: turn on / off"
+  }
+}
