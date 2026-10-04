@@ -20,7 +20,7 @@ import struct
 import subprocess
 import sys
 
-VERSION = "2.0.0"
+VERSION = "2.0.1"
 ALLOWED_EXTENSION = "site-keyboard-layout@trs-1342"
 MAX_MESSAGE_BYTES = 4096
 LAYOUT_RE = re.compile(r"^[A-Za-z0-9_-]{1,32}(\([A-Za-z0-9_-]{1,32}\))?$")

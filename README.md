@@ -64,13 +64,13 @@ One command, once. The setup screen shows it with a copy button.
 **Linux (KDE Plasma)**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.0/native/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.1/native/install.sh | sudo bash
 ```
 
 **Windows** (PowerShell, no administrator rights needed; Python 3 must be installed)
 
 ```powershell
-irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.0/native/install.ps1 | iex
+irm https://raw.githubusercontent.com/trs-1342/site-keyboard-layout/v2.0.1/native/install.ps1 | iex
 ```
 
 The installer downloads a single Python file from the same release, verifies
